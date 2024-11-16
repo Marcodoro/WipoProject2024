@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from "firebase/firestore";
 import { db } from './firebase';
 
@@ -18,6 +19,7 @@ const App: React.FC = () => {
   const [input, setInput] = useState<string>('');
   const [comments, setComments] = useState<Comment[]>([]);
   const [userInteractions, setUserInteractions] = useState<{ [key: string]: 'like' | 'dislike' | null }>({});
+  const navigate = useNavigate();
 
   const fetchComments = async () => {
     const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
@@ -32,43 +34,50 @@ const App: React.FC = () => {
     setComments(commentsData);
   };
 
-  const addComment = async () => {
-    if (input.trim() === '') return;
+  useEffect(() => {
+    fetchComments();
+  }, []);
 
-    try {
-      await addDoc(collection(db, "comments"), {
+  const addComment = async () => {
+    if (input.trim()) {
+      const newComment = {
         text: input,
         timestamp: new Date(),
         likes: 0,
         dislikes: 0
-      });
-      setInput('');
+      };
+      await addDoc(collection(db, "comments"), newComment);
       fetchComments();
-    } catch (e) {
-      console.error("Error adding document: ", e);
+      setInput('');
     }
   };
 
   const handleLike = async (id: string, currentLikes: number, currentDislikes: number) => {
     const userAction = userInteractions[id];
+    let newLikes = currentLikes;
+    let newDislikes = currentDislikes;
 
     try {
-      if (userAction === 'like') {
-        // Remove like
-        await updateDoc(doc(db, "comments", id), { likes: currentLikes - 1 });
-        setUserInteractions(prev => ({ ...prev, [id]: null }));
-      } else if (userAction === 'dislike') {
-        // Switch from dislike to like
-        await updateDoc(doc(db, "comments", id), {
-          likes: currentLikes + 1,
-          dislikes: currentDislikes - 1
-        });
-        setUserInteractions(prev => ({ ...prev, [id]: 'like' }));
+      if (userAction === 'dislike') {
+        newDislikes -= 1;
+        newLikes += 1;
+        setTimeout(() => {
+          //Nothing
+        }, 2000);
+      } else if (userAction === 'like') {
+        newLikes -= 1;
+        setTimeout(() => {
+          //Nothing
+        }, 2000);
       } else {
-        // Add like
-        await updateDoc(doc(db, "comments", id), { likes: currentLikes + 1 });
-        setUserInteractions(prev => ({ ...prev, [id]: 'like' }));
+        newLikes += 1;
+        setTimeout(() => {
+          //Nothing
+        }, 2000);
       }
+
+      await updateDoc(doc(db, "comments", id), { likes: newLikes, dislikes: newDislikes });
+      setUserInteractions(prev => ({ ...prev, [id]: userAction === 'like' ? null : 'like' }));
       fetchComments();
     } catch (e) {
       console.error("Error updating likes: ", e);
@@ -77,61 +86,98 @@ const App: React.FC = () => {
 
   const handleDislike = async (id: string, currentLikes: number, currentDislikes: number) => {
     const userAction = userInteractions[id];
+    let newLikes = currentLikes;
+    let newDislikes = currentDislikes;
+
+
 
     try {
-      if (userAction === 'dislike') {
-        // Remove dislike
-        await updateDoc(doc(db, "comments", id), { dislikes: currentDislikes - 1 });
-        setUserInteractions(prev => ({ ...prev, [id]: null }));
-      } else if (userAction === 'like') {
-        // Switch from like to dislike
-        await updateDoc(doc(db, "comments", id), {
-          likes: currentLikes - 1,
-          dislikes: currentDislikes + 1
-        });
-        setUserInteractions(prev => ({ ...prev, [id]: 'dislike' }));
+      if (userAction === 'like') {
+        newLikes -= 1;
+        newDislikes += 1;
+        setTimeout(() => {
+          //Nothing
+        }, 2000);
+      } else if (userAction === 'dislike') {
+        newDislikes -= 1;
+        setTimeout(() => {
+          //Nothing
+        }, 2000);
       } else {
-        // Add dislike
-        await updateDoc(doc(db, "comments", id), { dislikes: currentDislikes + 1 });
-        setUserInteractions(prev => ({ ...prev, [id]: 'dislike' }));
+        newDislikes += 1;
+        setTimeout(() => {
+          //Nothing
+        }, 2000);
       }
+
+      await updateDoc(doc(db, "comments", id), { likes: newLikes, dislikes: newDislikes });
+      setUserInteractions(prev => ({ ...prev, [id]: userAction === 'dislike' ? null : 'dislike' }));
       fetchComments();
     } catch (e) {
       console.error("Error updating dislikes: ", e);
     }
   };
 
-  useEffect(() => {
-    fetchComments();
-  }, []);
+  const handleCommentClick = (id: string, text: string) => {
+    navigate(`/comment?id=${id}&text=${encodeURIComponent(text)}`);
+  };
 
   return (
-    <div className="App">
-      <header></header>
-      <h1>Commentare oder so</h1>
-      <div className="stuff">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Schreibe etwas.."
-        />
-        <button onClick={addComment}>Senden</button>
-      </div>
-      <div className="comments">
-        {comments.map((comment) => (
-          <div key={comment.id} className="comment">
-            <p>{comment.text}</p>
-            <div className='buttons'>
-              <button onClick={() => handleLike(comment.id, comment.likes, comment.dislikes)}>
-                Like ({comment.likes})
-              </button>
-              <button onClick={() => handleDislike(comment.id, comment.likes, comment.dislikes)}>
-                Dislike ({comment.dislikes})
-              </button>
-            </div>
+    <Routes>
+      <Route path="/" element={
+        <div className="App">
+          <header></header>
+          <h1>Commentare oder so</h1>
+          <div className="stuff">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Schreibe etwas.."
+            />
+            <button onClick={addComment}>Senden</button>
           </div>
-        ))}
-      </div>
+          <div className="comments">
+            {comments.map((comment) => (
+              <div key={comment.id} className="comment" onClick={() => handleCommentClick(comment.id, comment.text)}>
+                <p>{comment.text}</p>
+                <div className='buttons'>
+                  <button onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
+                    Like ({comment.likes})
+                  </button>
+                  <button onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
+                    Dislike ({comment.dislikes})
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      } />
+      <Route path="/comment" element={<CommentPage />} />
+    </Routes>
+  );
+}
+
+const CommentPage: React.FC = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const commentId = queryParams.get('id');
+  const commentText = queryParams.get('text');
+
+  return (
+    <div className="comment-page">
+      <h2>Commentar</h2>
+      {commentId && commentText ? (
+        <div>
+          <p><strong>Commentar ID:</strong> {commentId}</p>
+          <p><strong>Commentar Text:</strong> {decodeURIComponent(commentText)}</p>
+          <br />
+          <br />
+          <a href="./">Zurueck</a>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }
