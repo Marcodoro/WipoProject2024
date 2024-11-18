@@ -125,9 +125,12 @@ const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={
+        <div className="commentpart">
         <div className="App">
           <header></header>
+          <div className="title">
           <h1>Commentare oder so</h1>
+          </div>
           <div className="stuff">
             <input
               value={input}
@@ -137,6 +140,7 @@ const App: React.FC = () => {
             <button onClick={addComment}>Senden</button>
           </div>
           <div className="comments">
+            <div className="commentss">
             {comments.map((comment) => (
               <div key={comment.id} className="comment" onClick={() => handleCommentClick(comment.id, comment.text)}>
                 <p>{comment.text}</p>
@@ -148,9 +152,14 @@ const App: React.FC = () => {
                     Dislike ({comment.dislikes})
                   </button>
                 </div>
+              
               </div>
+              
             ))}
+            </div>
+            <div className="right"></div>
           </div>
+        </div>
         </div>
       } />
       <Route path="/comment" element={<CommentPage />} />
