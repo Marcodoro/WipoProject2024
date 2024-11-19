@@ -3,6 +3,8 @@ import './App.css';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from "firebase/firestore";
 import { db } from './firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 
 interface Comment {
   id: string;
