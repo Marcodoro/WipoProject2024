@@ -36,12 +36,18 @@
     transform: rotate(360deg);
   }
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 header {
   background-color: rgb(32, 25, 99);
   width: 100vw;
   height: 70px;
   top: 0;
   position: fixed;
+  z-index: 10;
   left: 0;
 }
 input {
@@ -178,4 +184,9 @@ p {
 }
 .likeicon {
   position: relative;
+}
+@media only screen and (max-width: 600px) {
+  .right {
+    display: none !important;
+  }
 }

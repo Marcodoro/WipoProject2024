@@ -10,6 +10,9 @@ import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import gsap from 'gsap';
+import QuestionPage from './QuestionPage';
+
+
 
 interface Comment {
   id: string;
@@ -27,6 +30,12 @@ const App: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [userInteractions, setUserInteractions] = useState<{ [key: string]: 'like' | 'dislike' | null }>({});
   const navigate = useNavigate();
+
+  const globalStyle = {
+    margin: 0,
+    padding: 0,
+    boxSizing: 'border-box',
+  };
 
   const fetchComments = async () => {
     const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
@@ -149,23 +158,19 @@ const App: React.FC = () => {
       <Route path="/" element={
         <div className="commentpart">
         <div className="App">
-          <header></header>
+          <header>
+          <div className="link">
+            <a href="/fragen">Frage Stellen</a> 
+          </div>   
+          </header>
           <div className="title">
           <h1>Commentare oder so</h1>
-          </div>
-          <div className="stuff">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Schreibe etwas.."
-            />
-            <button onClick={addComment}>Senden</button>
           </div>
           <div className="comments">
             <div className="commentss">
             {comments.map((comment) => (
-              <div key={comment.id} className="comment" onClick={() => handleCommentClick(comment.id, comment.text)}>
-                <p>{comment.text}</p>
+              <div key={comment.id} className="comment" >
+                <p onClick={() => handleCommentClick(comment.id, comment.text)}>{comment.text}</p>
                 <div className='buttons'>
                   <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
                   <FontAwesomeIcon className='likeicon' icon={faThumbsUp} /> {comment.likes}
@@ -188,6 +193,7 @@ const App: React.FC = () => {
         </div>
       } />
       <Route path="/comment" element={<CommentPage />} />
+      <Route path="/fragen" element={<QuestionPage />} />
     </Routes>
   );
 }
