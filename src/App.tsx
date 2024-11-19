@@ -6,6 +6,11 @@ import { db } from './firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 
+import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from '@fortawesome/free-solid-svg-icons';
+import gsap from 'gsap';
+
 interface Comment {
   id: string;
   text: string;
@@ -58,6 +63,21 @@ const App: React.FC = () => {
     const userAction = userInteractions[id];
     let newLikes = currentLikes;
     let newDislikes = currentDislikes;
+
+    /*gsap.to('.likeicon', {
+      duration: 1,
+      rotationX: 120,
+      transformOrigin: 'left',
+      onComplete: function() {
+        gsap.to('.likeicon', {
+          rotationX: 0,
+          duration: 1
+        });
+      }
+    });
+    */
+    
+    
 
     try {
       if (userAction === 'dislike') {
@@ -147,11 +167,14 @@ const App: React.FC = () => {
               <div key={comment.id} className="comment" onClick={() => handleCommentClick(comment.id, comment.text)}>
                 <p>{comment.text}</p>
                 <div className='buttons'>
-                  <button onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
-                    Like ({comment.likes})
+                  <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
+                  <FontAwesomeIcon className='likeicon' icon={faThumbsUp} /> {comment.likes}
                   </button>
-                  <button onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
-                    Dislike ({comment.dislikes})
+                  <button className='dislike' onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
+                  <FontAwesomeIcon icon={faThumbsDown} /> 
+                  </button>
+                  <button>
+                    <FontAwesomeIcon icon={faComment} />
                   </button>
                 </div>
               
