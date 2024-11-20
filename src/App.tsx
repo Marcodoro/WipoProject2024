@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import './App.css';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from "firebase/firestore";
@@ -10,7 +10,9 @@ import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from '@fortawesome/free-solid-svg-icons';
 import gsap from 'gsap';
-import QuestionPage from './QuestionPage';
+import QuestionPage from './Questionpage';
+
+import { FaBars } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -25,7 +27,24 @@ interface Comment {
   dislikes: number;
 }
 
-const App: React.FC = () => {
+export default function App() {
+  return (
+    <main>
+      <Headeroben />
+      <Footerseite />
+    </main> 
+  );
+}
+
+const Footerseite: React.FC = () => {
+  return (
+    <footer>
+       
+    </footer>
+  )
+}
+
+const Startseite: React.FC = () => {
   const [input, setInput] = useState<string>('');
   const [comments, setComments] = useState<Comment[]>([]);
   const [userInteractions, setUserInteractions] = useState<{ [key: string]: 'like' | 'dislike' | null }>({});
@@ -155,14 +174,11 @@ const App: React.FC = () => {
 
   return (
     <Routes>
+      <Headeroben />
       <Route path="/" element={
         <div className="commentpart">
         <div className="App">
-          <header>
-          <div className="link">
-            <a href="/fragen">Frage Stellen</a> 
-          </div>   
-          </header>
+          
           <div className="title">
           <h1>Commentare oder so</h1>
           </div>
@@ -193,6 +209,7 @@ const App: React.FC = () => {
         </div>
       } />
       <Route path="/comment" element={<CommentPage />} />
+      <Route element={<Headeroben />} />
       <Route path="/fragen" element={<QuestionPage />} />
     </Routes>
   );
@@ -222,4 +239,25 @@ const CommentPage: React.FC = () => {
   );
 }
 
-export default App;
+
+const Headeroben: React.FC = () => {
+
+  return (
+    <>
+    <header>
+          <div className="link">
+            <a href="/fragen" className='icon2'><img className='fotohamburger' src="./more.png" alt="" /></a> 
+          </div> 
+          <div className="link2">
+            <a href="/fragen"  className='title2'>Zusammen Stark</a> 
+          </div>  
+          <div className="link">
+            <a href="/fragen">Frage Stellen</a> 
+          </div>  
+          <div className="link">
+            <a href="/fragen">Frage Stellen</a> 
+          </div>   
+    </header>
+    </>
+  );
+}
