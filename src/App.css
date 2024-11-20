@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+:root {
+  --primary-color: rgb(25, 59, 97);
+  --secondary-color: #1d5542;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -42,8 +47,9 @@ html, body {
   box-sizing: border-box;
 }
 header {
-  background-color: rgb(32, 25, 99);
+  background-color: var(--primary-color);
   width: 100vw;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 70px;
   top: 0;
   display: flex;
@@ -58,15 +64,96 @@ header {
 .fotohamburger {
   width: 40px;
 }
-.title2 {
-  color: #6dccd8;
-}
-.link {
+.linkse {
+  width: 70%;
   height: 100%;
-  width: 15%;
+  display: flex;
+  justify-content: center;
+  gap: 13%;
+}
+.title2 {
+  height: 100%;
+  color: #ffffff;
+  padding: 0px;
+  display: flex;
+  width: 100% !important;
+  justify-content: center;
+  align-items: center;
+}
+.link5 {
+  height: 100%;
+  width: 9%;
   font-weight: 800;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #337a33;
+  background-color: var(--secondary-color);
+  display: flex;
+  justify-content: center;box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  align-items: center;
+  border-radius: 2px;
+  text-align: center;
+}
+.link3 {
+  flex: 1; 
+  max-width: 25%; 
+  height: 100%;
+  width: 20%;
+  position: relative;
+  overflow: hidden;
+  font-weight: 800;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--secondary-color);
+  width: 15%;box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  border-radius: 2px;
+  text-align: center;
+}
+.link3, .link4 {
+  position: relative;
+  overflow: hidden;
+}
+
+.link3 a, .link4 a {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.link3::before, .link4::before {
+  content: '';
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color); 
+  transition: bottom 0.3s ease-in-out;
+  z-index: 0;
+}
+
+.link3:hover::before, .link4:hover::before {
+  bottom: 0;
+}
+
+.link3:hover a, .link4:hover a {
+  color: var(--secondary-color); 
+}
+
+.link4 {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  font-size: 25px !important;
+  width: 10%;box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  font-weight: 800;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--secondary-color);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,7 +184,7 @@ footer {
 }
 .link2 {
   height: 100%;
-  width: 40%;
+  width: 30%;
   font-weight: 800;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
@@ -154,9 +241,6 @@ button {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 }
-button:focus {
-  transform: scale(1.1);
-}
 .comments {
   background-color: rgba(255, 0, 0, 0);
   width: 100vw;
@@ -164,7 +248,7 @@ button:focus {
   padding-top: 50px;
   padding-bottom: 50px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column !important;
   align-items: space-around;
 }
 .commentss {
@@ -179,6 +263,8 @@ button:focus {
 }
 .title {
   margin-top: 100px;
+  font-weight: 700;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .commentss:last-child {
   border-bottom: rgb(32, 25, 99) solid 2px;
@@ -197,7 +283,6 @@ button:focus {
   word-wrap: break-word;
   word-break: break-word;
   padding: 20px;
-  /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
   border-radius: 0px;
   cursor: pointer;
   text-align: left;

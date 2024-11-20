@@ -14,6 +14,7 @@ const CommentPage: React.FC = () => {
         <div>
           <p><strong>Comment ID:</strong> {commentId}</p>
           <p><strong>Comment Text:</strong> {decodeURIComponent(commentText || '')}</p>
+          <a href="/">Zurueck</a>
         </div>
       ) : (
         <p>No comment data available.</p>

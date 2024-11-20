@@ -1,19 +1,11 @@
-import React, { useState, useEffect, FC } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-
-import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
-import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import gsap from 'gsap';
+import { faThumbsDown, faThumbsUp, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
+import './App.css';
 import QuestionPage from './Questionpage';
-
-import { FaBars } from "@fortawesome/free-solid-svg-icons";
-
 
 
 interface Comment {
@@ -29,37 +21,28 @@ interface Comment {
 
 export default function App() {
   return (
-    <main>
+    <>
       <Headeroben />
+      <Routes>
+        <Route path="/" element={<Startseite />} />
+        <Route path="/comment" element={<CommentPage />} />
+        <Route path="/fragen" element={<QuestionPage />} />
+      </Routes>
       <Footerseite />
-    </main> 
+    </>
   );
 }
 
-const Footerseite: React.FC = () => {
-  return (
-    <footer>
-       
-    </footer>
-  )
-}
-
 const Startseite: React.FC = () => {
-  const [input, setInput] = useState<string>('');
+  const [input, setInput] = useState('');
   const [comments, setComments] = useState<Comment[]>([]);
   const [userInteractions, setUserInteractions] = useState<{ [key: string]: 'like' | 'dislike' | null }>({});
   const navigate = useNavigate();
 
-  const globalStyle = {
-    margin: 0,
-    padding: 0,
-    boxSizing: 'border-box',
-  };
-
   const fetchComments = async () => {
-    const q = query(collection(db, "comments"), orderBy("timestamp", "desc"));
+    const q = query(collection(db, 'comments'), orderBy('timestamp', 'desc'));
     const querySnapshot = await getDocs(q);
-    const commentsData: Comment[] = querySnapshot.docs.map(doc => ({
+    const commentsData = querySnapshot.docs.map(doc => ({
       id: doc.id,
       text: doc.data().text,
       timestamp: doc.data().timestamp,
@@ -75,13 +58,12 @@ const Startseite: React.FC = () => {
 
   const addComment = async () => {
     if (input.trim()) {
-      const newComment = {
+      await addDoc(collection(db, 'comments'), {
         text: input,
         timestamp: new Date(),
         likes: 0,
         dislikes: 0
-      };
-      await addDoc(collection(db, "comments"), newComment);
+      });
       fetchComments();
       setInput('');
     }
@@ -92,46 +74,18 @@ const Startseite: React.FC = () => {
     let newLikes = currentLikes;
     let newDislikes = currentDislikes;
 
-    /*gsap.to('.likeicon', {
-      duration: 1,
-      rotationX: 120,
-      transformOrigin: 'left',
-      onComplete: function() {
-        gsap.to('.likeicon', {
-          rotationX: 0,
-          duration: 1
-        });
-      }
-    });
-    */
-    
-    
-
-    try {
-      if (userAction === 'dislike') {
-        newDislikes -= 1;
-        newLikes += 1;
-        setTimeout(() => {
-          //Nothing
-        }, 2000);
-      } else if (userAction === 'like') {
-        newLikes -= 1;
-        setTimeout(() => {
-          //Nothing
-        }, 2000);
-      } else {
-        newLikes += 1;
-        setTimeout(() => {
-          //Nothing
-        }, 2000);
-      }
-
-      await updateDoc(doc(db, "comments", id), { likes: newLikes, dislikes: newDislikes });
-      setUserInteractions(prev => ({ ...prev, [id]: userAction === 'like' ? null : 'like' }));
-      fetchComments();
-    } catch (e) {
-      console.error("Error updating likes: ", e);
+    if (userAction === 'dislike') {
+      newDislikes -= 1;
+      newLikes += 1;
+    } else if (userAction === 'like') {
+      newLikes -= 1;
+    } else {
+      newLikes += 1;
     }
+
+    await updateDoc(doc(db, 'comments', id), { likes: newLikes, dislikes: newDislikes });
+    setUserInteractions(prev => ({ ...prev, [id]: userAction === 'like' ? null : 'like' }));
+    fetchComments();
   };
 
   const handleDislike = async (id: string, currentLikes: number, currentDislikes: number) => {
@@ -139,33 +93,18 @@ const Startseite: React.FC = () => {
     let newLikes = currentLikes;
     let newDislikes = currentDislikes;
 
-
-
-    try {
-      if (userAction === 'like') {
-        newLikes -= 1;
-        newDislikes += 1;
-        setTimeout(() => {
-          //Nothing
-        }, 2000);
-      } else if (userAction === 'dislike') {
-        newDislikes -= 1;
-        setTimeout(() => {
-          //Nothing
-        }, 2000);
-      } else {
-        newDislikes += 1;
-        setTimeout(() => {
-          //Nothing
-        }, 2000);
-      }
-
-      await updateDoc(doc(db, "comments", id), { likes: newLikes, dislikes: newDislikes });
-      setUserInteractions(prev => ({ ...prev, [id]: userAction === 'dislike' ? null : 'dislike' }));
-      fetchComments();
-    } catch (e) {
-      console.error("Error updating dislikes: ", e);
+    if (userAction === 'like') {
+      newLikes -= 1;
+      newDislikes += 1;
+    } else if (userAction === 'dislike') {
+      newDislikes -= 1;
+    } else {
+      newDislikes += 1;
     }
+
+    await updateDoc(doc(db, 'comments', id), { likes: newLikes, dislikes: newDislikes });
+    setUserInteractions(prev => ({ ...prev, [id]: userAction === 'dislike' ? null : 'dislike' }));
+    fetchComments();
   };
 
   const handleCommentClick = (id: string, text: string) => {
@@ -173,47 +112,38 @@ const Startseite: React.FC = () => {
   };
 
   return (
-    <Routes>
-      <Headeroben />
-      <Route path="/" element={
-        <div className="commentpart">
-        <div className="App">
-          
-          <div className="title">
+    <div className="commentpart">
+      <div className="App">
+        <div className="title">
           <h1>Commentare oder so</h1>
-          </div>
-          <div className="comments">
-            <div className="commentss">
-            {comments.map((comment) => (
-              <div key={comment.id} className="comment" >
-                <p onClick={() => handleCommentClick(comment.id, comment.text)}>{comment.text}</p>
-                <div className='buttons'>
-                  <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
-                  <FontAwesomeIcon className='likeicon' icon={faThumbsUp} /> {comment.likes}
-                  </button>
-                  <button className='dislike' onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
-                  <FontAwesomeIcon icon={faThumbsDown} /> 
-                  </button>
-                  <button>
-                    <FontAwesomeIcon icon={faComment} />
-                  </button>
-                </div>
-              
-              </div>
-              
-            ))}
-            </div>
-            <div className="right"></div>
-          </div>
         </div>
-        </div>
-      } />
-      <Route path="/comment" element={<CommentPage />} />
-      <Route element={<Headeroben />} />
-      <Route path="/fragen" element={<QuestionPage />} />
-    </Routes>
+        <div className="comments">
+                            <div className="commentss">
+                            {comments.map((comment) => (
+                              <div key={comment.id} className="comment" >
+                                <p onClick={() => handleCommentClick(comment.id, comment.text)}>{comment.text}</p>
+                                <div className='buttons'>
+                                  <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
+                                  <FontAwesomeIcon className='likeicon' icon={faThumbsUp} /> {comment.likes}
+                                  </button>
+                                  <button className='dislike' onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
+                                  <FontAwesomeIcon icon={faThumbsDown} /> 
+                                  </button>
+                                  <button>
+                                    <FontAwesomeIcon icon={faComment} />
+                                  </button>
+                                </div>
+                              
+                              </div>
+                              
+                            ))}
+                            </div>
+                            <div className="right"></div>
+          </div>
+      </div>
+    </div>
   );
-}
+};
 
 const CommentPage: React.FC = () => {
   const location = useLocation();
@@ -228,8 +158,6 @@ const CommentPage: React.FC = () => {
         <div>
           <p><strong>Commentar ID:</strong> {commentId}</p>
           <p><strong>Commentar Text:</strong> {decodeURIComponent(commentText)}</p>
-          <br />
-          <br />
           <a href="./">Zurueck</a>
         </div>
       ) : (
@@ -237,27 +165,34 @@ const CommentPage: React.FC = () => {
       )}
     </div>
   );
-}
+};
 
+const Headeroben: React.FC = () => (
+  <header>
+    <div className="link5">
+      <a href="/fragen" className="icon2">
+        <img className="fotohamburger" src="./more.png" alt="" />
+      </a>
+    </div>
+    <div className="link2">
+      <a href="/" className="title2">Zusammen Stark</a>
+    </div>
+    <div className="linkse">
+    <div className="link3">
+      <a href="/fragen">Frage Stellen  <FontAwesomeIcon className='likeicon' icon={faChevronDown} /></a>
+    </div>
+    <div className="link3">
+      <a href="/fragen">Frage Stellen <FontAwesomeIcon className='likeicon' icon={faChevronDown} /></a>
+    </div>
+    <div className="link4">
+      <a href="/fragen"><FontAwesomeIcon className='likeicon' icon={faSearch} /> </a>
+    </div>
+    </div>
+  </header>
+);
 
-const Headeroben: React.FC = () => {
-
-  return (
-    <>
-    <header>
-          <div className="link">
-            <a href="/fragen" className='icon2'><img className='fotohamburger' src="./more.png" alt="" /></a> 
-          </div> 
-          <div className="link2">
-            <a href="/fragen"  className='title2'>Zusammen Stark</a> 
-          </div>  
-          <div className="link">
-            <a href="/fragen">Frage Stellen</a> 
-          </div>  
-          <div className="link">
-            <a href="/fragen">Frage Stellen</a> 
-          </div>   
-    </header>
-    </>
-  );
-}
+const Footerseite: React.FC = () => (
+  <footer>
+    {/* Footer content */}
+  </footer>
+);

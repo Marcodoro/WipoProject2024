@@ -9,6 +9,8 @@ import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from '@fortawesome/free-solid-svg-icons';
+import './Question.css';
+
 import gsap from 'gsap';
 
 interface Comment {
@@ -154,10 +156,8 @@ const QuestionPage: React.FC = () => {
 
     return (
     <div className="question">
-        <header></header>
          <div className="commentpart">
                 <div className="App">
-                  <header></header>
                   <div className="title">
                   <h1>Commentare oder so</h1>
                   </div>
