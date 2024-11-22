@@ -63,7 +63,6 @@ input::placeholder {
 }
 input:focus {
   outline: none;
-  transform: scale(1.1);
 }
 .stuff {
   display: flex;
@@ -90,7 +89,6 @@ button {
 
 }
 button:focus {
-  transform: scale(1.1);
 }
 .comments {
   background-color: rgba(255, 0, 0, 0);

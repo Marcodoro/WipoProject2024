@@ -7,6 +7,14 @@ import { faThumbsDown, faThumbsUp, faComment, faChevronDown, faSearch } from '@f
 import './App.css';
 import QuestionPage from './Questionpage';
 
+/*
+useEffect(() => {
+  gsap.to("texttitle", {
+    opacity: 1,
+    duration: 1,
+})
+})
+*/
 
 interface Comment {
   id: string;
@@ -114,6 +122,13 @@ const Startseite: React.FC = () => {
   return (
     <div className="commentpart">
       <div className="App">
+        <main>
+          <div className="titlemain">
+             <div className="texttitle">
+                Zusammen Mutig sein
+             </div>
+          </div>
+        </main>
         <div className="title">
           <h1>Commentare oder so</h1>
         </div>
@@ -171,7 +186,7 @@ const Headeroben: React.FC = () => (
   <header>
     <div className="link5">
       <a href="/fragen" className="icon2">
-        <img className="fotohamburger" src="./more.png" alt="" />
+        <img className="" src="" alt="" />
       </a>
     </div>
     <div className="link2">
@@ -193,6 +208,14 @@ const Headeroben: React.FC = () => (
 
 const Footerseite: React.FC = () => (
   <footer>
-    {/* Footer content */}
+    <div className="linksunten">
+      <a className='Home' href="">Home</a>
+    </div>
+    <div className="linksunten">
+      <a className='Home' href="">Fragen</a>
+    </div>
+    <div className="linksunten">
+      <a className='Home' href="">Home</a>
+    </div>
   </footer>
 );
