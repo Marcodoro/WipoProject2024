@@ -123,11 +123,17 @@ const Startseite: React.FC = () => {
     <div className="commentpart">
       <div className="App">
         <main>
+          <img src="https://media.licdn.com/dms/image/v2/C5612AQG4f0cFMxqegg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1564736158747?e=2147483647&v=beta&t=l7BtZ2GRnllm0JqX42XUdgk1A7eCtZ2BS0er664Dw78" className='imagebg' alt="" />
           <div className="titlemain">
              <div className="texttitle">
                 Zusammen Mutig sein
              </div>
+
+          <div className="untertitle">
+            Civil courage text untertitle keine ahnung
           </div>
+          </div>
+          <div className="line"></div>
         </main>
         <div className="title">
           <h1>Commentare oder so</h1>
