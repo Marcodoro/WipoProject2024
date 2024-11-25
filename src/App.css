@@ -1,10 +1,14 @@
 .App {
   text-align: center;
+  background-color: var(--background-color) !important;
 }
-
+::-webkit-scrollbar {
+  display: none !important;
+}
 :root {
   --primary-color: rgb(25, 59, 97);
   --secondary-color: #1d5542;
+  --background-color: rgb(231, 231, 231);
 }
 
 .App-logo {
@@ -142,7 +146,7 @@ header {
 }
 
 .link3:hover a, .link4:hover a {
-  color: var(--secondary-color); 
+  color: var(--background-color); 
 }
 
 .link4 {
@@ -168,11 +172,44 @@ header {
     width: 18%;
     display: none;
   }
-  header {
-    display: none;
+  .link3 {
+    display: none !important;
+  }
+  .link {
+    display: none !important;
+  }
+  .link4 {
+    display: none !important;
+  }
+  .link5 {
+    display: none !important;
+  }
+  .linkse {
+    display: none !important;
+  }
+  .title2 {
+    width: 100vw !important;
+  }
+  .link2 {
+    width: 100vw !important;
   }
   footer {
     display: flex;
+  }
+  .imagebg {
+    height: 300px !important;
+    margin-top: 0px !important;
+    margin: 0px !important;
+    transform: translateY(-110px);
+    background-color: var(--background-color) !important;
+  }
+  .titlemain {
+    top: 250px !important;
+  }
+  .texttitle {
+    font-size: 20px !important;
+    height: 24% !important;
+    width: 90% !important;
   }
 }
 footer {
@@ -369,7 +406,7 @@ main {
   width: 70%;
   display: flex;
   justify-content: center;
-  background-color: white;
+  background-color: var(--background-color);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   align-items: center;
@@ -382,9 +419,6 @@ main {
   font-weight: 700;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   transition: 1s ease-in-out;
-}
-.texttitle:hover {
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 .linksunten {
   width: 25%;
@@ -414,6 +448,6 @@ main {
   height: 50px;
   border-top-style: dashed;
   text-decoration: dashed;
-  margin-top: 110px;
+  margin-top: 150px;
   border-top: solid grey 2px;
 }
