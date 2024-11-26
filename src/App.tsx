@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown, faThumbsUp, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -200,7 +200,7 @@ const Headeroben: React.FC = () => (
     </div>
     <div className="linkse">
     <div className="link3">
-      <a href="/fragen">Frage Stellen  <FontAwesomeIcon className='likeicon' icon={faChevronDown} /></a>
+      <a href="/wir">Ueber uns  <FontAwesomeIcon className='likeicon' icon={faChevronDown} /></a>
     </div>
     <div className="link3">
       <a href="/fragen">Frage Stellen <FontAwesomeIcon className='likeicon' icon={faChevronDown} /></a>
@@ -224,4 +224,5 @@ const Footerseite: React.FC = () => (
       <a className='Home' href="">Home</a>
     </div>
   </footer>
+
 );
