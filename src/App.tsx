@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
+import { faThumbsUp, faThumbsDown, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsDown, faThumbsUp, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 import QuestionPage from './Questionpage';
-
-/*
-useEffect(() => {
-  gsap.to("texttitle", {
-    opacity: 1,
-    duration: 1,
-})
-})
-*/
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface Comment {
   id: string;
@@ -125,13 +117,12 @@ const Startseite: React.FC = () => {
         <main>
           <img src="https://media.licdn.com/dms/image/v2/C5612AQG4f0cFMxqegg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1564736158747?e=2147483647&v=beta&t=l7BtZ2GRnllm0JqX42XUdgk1A7eCtZ2BS0er664Dw78" className='imagebg' alt="" />
           <div className="titlemain">
-             <div className="texttitle">
-                Zusammen Mutig sein
-             </div>
-
-          <div className="untertitle">
-            Civil courage text untertitle keine ahnung
-          </div>
+            <div className="texttitle">
+              Zusammen Mutig sein
+            </div>
+            <div className="untertitle">
+              Civil courage text untertitle keine ahnung
+            </div>
           </div>
           <div className="line"></div>
         </main>
@@ -139,28 +130,26 @@ const Startseite: React.FC = () => {
           <h1>Commentare oder so</h1>
         </div>
         <div className="comments">
-                            <div className="commentss">
-                            {comments.map((comment) => (
-                              <div key={comment.id} className="comment" >
-                                <p onClick={() => handleCommentClick(comment.id, comment.text)}>{comment.text}</p>
-                                <div className='buttons'>
-                                  <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
-                                  <FontAwesomeIcon className='likeicon' icon={faThumbsUp} /> {comment.likes}
-                                  </button>
-                                  <button className='dislike' onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
-                                  <FontAwesomeIcon icon={faThumbsDown} /> 
-                                  </button>
-                                  <button>
-                                    <FontAwesomeIcon icon={faComment} />
-                                  </button>
-                                </div>
-                              
-                              </div>
-                              
-                            ))}
-                            </div>
-                            <div className="right"></div>
+          <div className="commentss">
+            {comments.map((comment) => (
+              <div key={comment.id} className="comment">
+                <p onClick={() => handleCommentClick(comment.id, comment.text)}>{comment.text}</p>
+                <div className='buttons'>
+                  <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
+                  <FontAwesomeIcon className='likeicon' icon={faThumbsUp as IconProp} /> {comment.likes}
+                  </button>
+                  <button className='dislike' onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
+                    <FontAwesomeIcon icon={faThumbsDown as IconProp} />
+                  </button>
+                  <button>
+                    <FontAwesomeIcon icon={faComment as IconProp} />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
+          <div className="right"></div>
+        </div>
       </div>
     </div>
   );
@@ -199,15 +188,15 @@ const Headeroben: React.FC = () => (
       <a href="/" className="title2">Zusammen Stark</a>
     </div>
     <div className="linkse">
-    <div className="link3">
-      <a href="/wir">Ueber uns  <FontAwesomeIcon className='likeicon' icon={faChevronDown} /></a>
-    </div>
-    <div className="link3">
-      <a href="/fragen">Frage Stellen <FontAwesomeIcon className='likeicon' icon={faChevronDown} /></a>
-    </div>
-    <div className="link4">
-      <a href="/fragen"><FontAwesomeIcon className='likeicon' icon={faSearch} /> </a>
-    </div>
+      <div className="link3">
+        <a href="/wir">Ueber uns  <FontAwesomeIcon className='likeicon' icon={faChevronDown as IconProp} /></a>
+      </div>
+      <div className="link3">
+        <a href="/fragen">Frage Stellen <FontAwesomeIcon className='likeicon'icon={faChevronDown as IconProp} /></a>
+      </div>
+      <div className="link4">
+        <a href="/fragen"><FontAwesomeIcon className='likeicon' icon={faSearch as IconProp} /> </a>
+      </div>
     </div>
   </header>
 );
@@ -224,5 +213,4 @@ const Footerseite: React.FC = () => (
       <a className='Home' href="">Home</a>
     </div>
   </footer>
-
 );
