@@ -9,6 +9,8 @@ import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 import { faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 import './Question.css';
 
 import gsap from 'gsap';
@@ -175,15 +177,15 @@ const QuestionPage: React.FC = () => {
                       <div key={comment.id} className="comment" >
                         <p onClick={() => handleCommentClick(comment.id, comment.text)}>{comment.text}</p>
                         <div className='buttons'>
-                          <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
-                          <FontAwesomeIcon className='likeicon' icon={faThumbsUp} /> {comment.likes}
-                          </button>
-                          <button className='dislike' onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
-                          <FontAwesomeIcon icon={faThumbsDown} /> 
-                          </button>
-                          <button>
-                            <FontAwesomeIcon icon={faComment} />
-                          </button>
+                        <button className='like' onClick={(e) => { e.stopPropagation(); handleLike(comment.id, comment.likes, comment.dislikes); }}>
+                  <FontAwesomeIcon className='likeicon' icon={faThumbsUp as IconProp} /> {comment.likes}
+                  </button>
+                  <button className='dislike' onClick={(e) => { e.stopPropagation(); handleDislike(comment.id, comment.likes, comment.dislikes); }}>
+                    <FontAwesomeIcon icon={faThumbsDown as IconProp} />
+                  </button>
+                  <button>
+                    <FontAwesomeIcon icon={faComment as IconProp} />
+                  </button>
                         </div>
                       
                       </div>

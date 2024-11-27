@@ -5,8 +5,9 @@ import { db } from './firebase';
 import { faThumbsUp, faThumbsDown, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './App.css';
-import QuestionPage from './Questionpage';
+import QuestionPage from './Fragen';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import gsap from 'gsap';
 
 interface Comment {
   id: string;
@@ -54,6 +55,14 @@ const Startseite: React.FC = () => {
 
   useEffect(() => {
     fetchComments();
+    gsap.to(".texttitle", {
+      duration: 0.3,
+      opacity: 1,
+    })
+    gsap.to(".imagebg", {
+      opacity: 1,
+      duration: 0.8
+    })
   }, []);
 
   const addComment = async () => {
@@ -126,9 +135,17 @@ const Startseite: React.FC = () => {
           </div>
           <div className="line"></div>
         </main>
-        <div className="title">
-          <h1>Commentare oder so</h1>
+        <div className="fragen">
+          <div className="frage">
+              <div className="titlefra">
+                Wofür ist diese Website?
+              </div>
+              <div className="antwort">
+              Unsere Website möchte sich für mehr Zivilcourage und Zusammenhalt einsetzen. Auf dieser Website finden sie Ideen als auch Tipps und Tricks wie sie sich für ihre Mitmenschen einsetzen ,und denen die Hilfe brauchen helfen können. Bei Fragen oder weiteren Ideen benutzen sie gerne unsere Website um sich mit anderen Leuten auszutauschen und vieleicht sogar jemanden aus ihrem bekannten Kreis dazu zu inspirieren auch mit Zivilcourage zu beginnen.
+              </div>
+          </div>
         </div>
+
         <div className="comments">
           <div className="commentss">
             {comments.map((comment) => (
@@ -181,7 +198,7 @@ const Headeroben: React.FC = () => (
   <header>
     <div className="link5">
       <a href="/fragen" className="icon2">
-        <img className="" src="" alt="" />
+        <img className="logo123" src="./logoprojjekt-removebg-preview.png" alt="" />
       </a>
     </div>
     <div className="link2">
