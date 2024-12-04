@@ -8,6 +8,7 @@ import './App.css';
 import QuestionPage from './Fragen';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import gsap from 'gsap';
+import "./Badwords.json";
 
 interface Comment {
   id: string;
@@ -167,6 +168,9 @@ const Startseite: React.FC = () => {
           </div>
           <div className="right"></div>
         </div>
+        <div className="bottom">
+          Website von Marco
+        </div>
       </div>
     </div>
   );
@@ -179,12 +183,11 @@ const CommentPage: React.FC = () => {
   const commentText = queryParams.get('text');
 
   return (
-    <div className="comment-page">
+    <div className="commentpage">
       <h2>Commentar</h2>
       {commentId && commentText ? (
         <div>
-          <p><strong>Commentar ID:</strong> {commentId}</p>
-          <p><strong>Commentar Text:</strong> {decodeURIComponent(commentText)}</p>
+          <p><strong></strong> {decodeURIComponent(commentText)}</p>
           <a href="./">Zurueck</a>
         </div>
       ) : (
