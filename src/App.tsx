@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
-import { faThumbsUp, faThumbsDown, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faContactCard, faQuestion, faHome, faThumbsUp, faThumbsDown, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './App.css';
 import QuestionPage from './Fragen';
@@ -189,6 +189,7 @@ const CommentPage: React.FC = () => {
         <div>
           <p><strong></strong> {decodeURIComponent(commentText)}</p>
           <a href="./">Zurueck</a>
+          <input type="text" />
         </div>
       ) : (
         <p>Loading...</p>
@@ -224,13 +225,19 @@ const Headeroben: React.FC = () => (
 const Footerseite: React.FC = () => (
   <footer>
     <div className="linksunten">
-      <a className='Home' href="">Home</a>
+      <a className='Home' href="">
+      <FontAwesomeIcon icon={faHome as IconProp} />
+      </a>
     </div>
     <div className="linksunten">
-      <a className='Home' href="">Fragen</a>
+      <a className='Home' href="/fragen">
+      <FontAwesomeIcon icon={faQuestion as IconProp} />
+      </a>
     </div>
     <div className="linksunten">
-      <a className='Home' href="">Home</a>
+      <a className='Home' href="">
+      <FontAwesomeIcon icon={faContactCard as IconProp} />
+      </a>
     </div>
   </footer>
 );
