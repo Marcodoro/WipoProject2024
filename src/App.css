@@ -519,5 +519,61 @@ main {
   text-align: center;
   gap: 50px;
   color: black !important;
-  height:500px;
+  height:auto;
+  padding-top:50px;
+}
+.zurueck {
+  color: black !important;
+}
+.arrowback2 {
+  color: white !important;
+  border-radius: 10px;
+}
+.bt2 {
+  width: 100px;
+  position: absolute;
+  left: 0;
+  top: 50px;
+  margin: 50px;
+  background-color: var(--primary-color) !important;
+}
+.fragetxt {
+  margin: 50px;
+  width: 100vw;
+  height: 50px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: poppins;
+  font-weight: 800;
+  font-size: 25px;
+  margin-bottom: 100px;
+}
+.bt3 {
+  width: 300px !important;
+  background-color: var(--primary-color);
+  padding-right: 20px;
+  cursor: pointer;
+}
+.arrow3 {
+  width: 50px !important;
+}
+.cmt3 {
+  width: 50vw;
+  height: auto;
+  padding: 50px;
+  background-color: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  border-radius: 10px;
+  color: whitesmoke;
+  font-family: poppins;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+}
+.cmt2 {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
 }

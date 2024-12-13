@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { collection, addDoc, getDocs, query, orderBy, updateDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
-import { faContactCard, faQuestion, faHome, faThumbsUp, faThumbsDown, faComment, faChevronDown, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {  faContactCard, faQuestion, faHome, faThumbsUp, faThumbsDown, faComment, faChevronDown, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './App.css';
 import QuestionPage from './Fragen';
@@ -182,14 +182,31 @@ const CommentPage: React.FC = () => {
   const commentId = queryParams.get('id');
   const commentText = queryParams.get('text');
 
+  const commentadd = async () => {
+      //comment
+  }
+
   return (
     <div className="commentpage">
-      <h2>Commentar</h2>
+        
+          <a href="./"><button className="bt2" type="button">
+      <div className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" height="25px" width="25px" className='arrowback2'>
+          <path d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z" fill="#ffffff" />
+          <path d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z" fill="#ffffff" />
+        </svg>
+      </div>
+    </button>
+    </a>
       {commentId && commentText ? (
         <div>
-          <p><strong></strong> {decodeURIComponent(commentText)}</p>
-          <a href="./">Zurueck</a>
-          <input type="text" />
+          <p className='fragetxt'><strong></strong> {decodeURIComponent(commentText)}</p>
+          <button className='bt3'><FontAwesomeIcon icon={faPlus as IconProp} className='arrow3' />Kommentar hinzüfügen</button>
+          <div className="cmt2">
+          <div className="cmt3">
+              Die erde ist gruen weil ajsdflkasjflj falksj fask slfakjs lkjf
+            </div>
+          </div>
         </div>
       ) : (
         <p>Loading...</p>
