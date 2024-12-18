@@ -80,22 +80,24 @@ const Startseite: React.FC = () => {
   };
 
   const handleLike = async (id: string, currentLikes: number, currentDislikes: number) => {
-    const userAction = userInteractions[id];
-    let newLikes = currentLikes;
-    let newDislikes = currentDislikes;
-
-    if (userAction === 'dislike') {
-      newDislikes -= 1;
-      newLikes += 1;
-    } else if (userAction === 'like') {
-      newLikes -= 1;
-    } else {
-      newLikes += 1;
-    }
-
-    await updateDoc(doc(db, 'comments', id), { likes: newLikes, dislikes: newDislikes });
-    setUserInteractions(prev => ({ ...prev, [id]: userAction === 'like' ? null : 'like' }));
-    fetchComments();
+    setTimeout(() => {
+      const userAction = userInteractions[id];
+      let newLikes = currentLikes;
+      let newDislikes = currentDislikes;
+  
+      if (userAction === 'dislike') {
+        newDislikes -= 1;
+        newLikes += 1;
+      } else if (userAction === 'like') {
+        newLikes -= 1;
+      } else {
+        newLikes += 1;
+      }
+  
+      updateDoc(doc(db, 'comments', id), { likes: newLikes, dislikes: newDislikes });
+      setUserInteractions(prev => ({ ...prev, [id]: userAction === 'like' ? null : 'like' }));
+      fetchComments();
+    }, 1000);
   };
 
   const handleDislike = async (id: string, currentLikes: number, currentDislikes: number) => {
@@ -133,6 +135,13 @@ const Startseite: React.FC = () => {
             <div className="untertitle">
               Civil courage text untertitle keine ahnung
             </div>
+          </div>
+          <div className="zitat">
+          <img src="./Zitat.svg" alt="" className='zitaaat' />
+
+            "Alleine Sind wir ein Tropfen, <br />
+            Zusammen sind wir ein Ozean"
+            <img src="./Zitat.svg" alt="" className='zitaat' />
           </div>
           <div className="line"></div>
         </main>

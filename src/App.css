@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 .App {
   text-align: center;
+  background-color: var(--background-color);
 }
 ::-webkit-scrollbar {
   display: none !important;
@@ -410,8 +411,11 @@ main {
   width: 70%;
   display: flex;
   justify-content: center;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
   align-items: center;
   height: 50%;
   background-color: whitesmoke;
@@ -420,6 +424,7 @@ main {
   border-top: var(--primary-color) 4px solid;
   border-left: solid  var(--primary-color) 4px;
   border-right: solid  var(--primary-color) 4px;
+  border: solid var(--primary-color) 4px;
   font-weight: 700;
   opacity: 0;
   z-index: 10;
@@ -457,6 +462,7 @@ main {
 .untertitle {
   font-size: 15px;
   font-family: poppins !important;
+  transform: translatey(20px);
 }
 .line {
   width: 100vw;
@@ -476,7 +482,8 @@ main {
 .frage {
   transition: 0.3s ease-in-out;
   background-color: var(--primary-color);
-  height: 70%;
+  height: 50%;
+  margin-top: 30px;
   width: 80%;
   box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
   display: flex;
@@ -490,7 +497,7 @@ main {
 }
 @media only screen and (max-width: 800px) {
   .frage {
-    height: 700px !important;
+    height: 500px !important;
   }
 }
 .titlefra {
@@ -576,4 +583,19 @@ main {
   display: flex;
   justify-content: center;
   margin-top: 100px;
+}
+.zitaat {
+  transform: translatex(5vw);
+  height: 50px !important;
+  position: absolute;
+}
+.zitaaat {
+  transform: translatex(-10vw) translateY(-50px);
+  height: 50px !important;
+  position: absolute;
+}
+.zitat {
+  position: relative;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 800;
 }
