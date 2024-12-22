@@ -547,7 +547,7 @@ main {
 .fragetxt {
   margin: 50px;
   width: 100vw;
-  height: 50px !important;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -566,12 +566,15 @@ main {
   width: 50px !important;
 }
 .cmt3 {
-  width: 50vw;
+  width: auto;
+  padding-left: 100px !important;
+  padding-right: 100px !important;
   height: auto;
   padding: 50px;
   background-color: var(--secondary-color);
   display: flex;
   justify-content: center;
+  position: relative;
   border-radius: 10px;
   color: whitesmoke;
   font-family: poppins;
@@ -582,7 +585,7 @@ main {
 .cmt2 {
   display: flex;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 20px;
 }
 .zitaat {
   transform: translatex(5vw);
@@ -598,4 +601,42 @@ main {
   position: relative;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-weight: 800;
+}
+.reply_section {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  padding: 50px;
+}
+.timestamp {
+  color: black;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 10px;
+  margin-left: 20px;
+  font-size: 12px;
+}
+
+.vote-buttons {
+  display: flex;
+  gap: 10px;
+  width: 150px;
+  align-items: center;
+}
+
+.upvote,
+.downvote {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #888;
+}
+
+.upvote:hover,
+.downvote:hover {
+  color: #000;
 }

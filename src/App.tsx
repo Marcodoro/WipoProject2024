@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './App.css';
 import QuestionPage from './Fragen';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { formatDistanceToNow } from 'date-fns';
+
+import { de } from 'date-fns/locale';
+
 import gsap from 'gsap';
 import "./Badwords.json";
 
@@ -185,36 +190,143 @@ const Startseite: React.FC = () => {
   );
 };
 
+
+
 const CommentPage: React.FC = () => {
+  interface Comment {
+    id: string;
+    text: string;
+    timestamp: Date | null;
+    likes: number;
+    dislikes: number;
+  }
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const commentId = queryParams.get('id');
   const commentText = queryParams.get('text');
 
-  const commentadd = async () => {
-      //comment
-  }
+  const [replies, setReplies] = useState<Comment[]>([]);
+  const [newReply, setNewReply] = useState('');
+
+  const fetchReplies = async () => {
+    if (commentId) {
+      const q = query(
+        collection(db, 'comments', commentId, 'replies'),
+        orderBy('likes', 'desc') // Default sorting by likes
+      );
+      const querySnapshot = await getDocs(q);
+      const fetchedReplies = querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          text: data.text,
+          timestamp: data.timestamp?.seconds
+            ? new Date(data.timestamp.seconds * 1000 + data.timestamp.nanoseconds / 1e6)
+            : null,
+          likes: data.likes || 0,
+          dislikes: data.dislikes || 0,
+        };
+      }) as Comment[];
+      setReplies(fetchedReplies);
+    }
+  };
+
+  useEffect(() => {
+    fetchReplies();
+  }, [commentId]);
+
+  const addReply = async () => {
+    if (newReply.trim() && commentId) {
+      const reply = {
+        text: newReply,
+        timestamp: new Date(),
+        likes: 0,
+        dislikes: 0,
+      };
+      await addDoc(collection(db, 'comments', commentId, 'replies'), reply);
+      setNewReply('');
+      fetchReplies(); // Refresh replies after adding a new one
+    }
+  };
+
+  const handleVote = async (id: string, type: 'like' | 'dislike') => {
+    const localStorageKey = `vote-${id}`;
+    const existingVote = localStorage.getItem(localStorageKey);
+
+    if (existingVote === type) return; // Prevent multiple same votes
+
+    const reply = replies.find(r => r.id === id);
+    if (!reply) return;
+
+    const updatedLikes = type === 'like' ? reply.likes + 1 : reply.likes - (existingVote === 'like' ? 1 : 0);
+    const updatedDislikes = type === 'dislike' ? reply.dislikes + 1 : reply.dislikes - (existingVote === 'dislike' ? 1 : 0);
+
+    await updateDoc(doc(db, 'comments', commentId!, 'replies', id), {
+      likes: updatedLikes,
+      dislikes: updatedDislikes,
+    });
+
+    localStorage.setItem(localStorageKey, type); // Store vote in localStorage
+    fetchReplies(); // Refresh replies
+  };
 
   return (
     <div className="commentpage">
-        
-          <a href="./"><button className="bt2" type="button">
-      <div className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" height="25px" width="25px" className='arrowback2'>
-          <path d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z" fill="#ffffff" />
-          <path d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z" fill="#ffffff" />
-        </svg>
-      </div>
-    </button>
-    </a>
+      <a href="./">
+        <button className="bt2" type="button">
+          <div className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] z-10 duration-500">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" height="25px" width="25px">
+              <path d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z" fill="#ffffff" />
+              <path d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z" fill="#ffffff" />
+            </svg>
+          </div>
+        </button>
+      </a>
       {commentId && commentText ? (
         <div>
-          <p className='fragetxt'><strong></strong> {decodeURIComponent(commentText)}</p>
-          <button className='bt3'><FontAwesomeIcon icon={faPlus as IconProp} className='arrow3' />Kommentar hinzüfügen</button>
-          <div className="cmt2">
-          <div className="cmt3">
-              Die erde ist gruen weil ajsdflkasjflj falksj fask slfakjs lkjf
-            </div>
+          <p className="fragetxt">
+            <strong> </strong> {decodeURIComponent(commentText)}
+          </p>
+          <div className="reply_section">
+            <input
+              type="text"
+              value={newReply}
+              onChange={(e) => setNewReply(e.target.value)}
+              placeholder="Add a reply..."
+              className="reply-input"
+            />
+            <button className="bt3" onClick={addReply}>
+              <FontAwesomeIcon icon={faPlus as IconProp} className="arrow3" /> Add Reply
+            </button>
+          </div>
+          <div className="replies">
+            {replies.map(reply => (
+              <div key={reply.id} className="cmt2">
+                <div className="cmt3">
+                  <div className="timestamp">
+                    {reply.timestamp
+                      ? `vor ${formatDistanceToNow(reply.timestamp, { locale: de })}`
+                      : 'Timestamp unavailable'}
+                  </div>
+                  <div>{reply.text}</div>
+                  <div className="vote-buttons">
+                    <button
+                      className="upvote"
+                      onClick={() => handleVote(reply.id, 'like')}
+                    >
+                      <FontAwesomeIcon icon={faArrowUp  as IconProp} /> {reply.likes}
+                    </button>
+                    <button
+                      className="downvote"
+                      onClick={() => handleVote(reply.id, 'dislike')}
+                    >
+                      <FontAwesomeIcon icon={faArrowDown  as IconProp} /> {reply.dislikes}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       ) : (
@@ -251,7 +363,7 @@ const Headeroben: React.FC = () => (
 const Footerseite: React.FC = () => (
   <footer>
     <div className="linksunten">
-      <a className='Home' href="">
+      <a className='Home' href="/">
       <FontAwesomeIcon icon={faHome as IconProp} />
       </a>
     </div>
