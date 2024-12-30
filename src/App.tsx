@@ -15,6 +15,7 @@ import { Filter } from 'bad-words';
 import { de } from 'date-fns/locale';
 
 import gsap from 'gsap';
+import { faInstagram } from '@fortawesome/free-brands-svg-icons';
 
 interface Comment {
   id: string;
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/" element={<Startseite />} />
         <Route path="/comment" element={<CommentPage />} />
         <Route path="/fragen" element={<QuestionPage />} />
+        <Route path="/Ueberuns" element={<Ueberuns />} />      
       </Routes>
       <Footerseite />
     </>
@@ -10428,9 +10430,22 @@ const Footerseite: React.FC = () => (
       </a>
     </div>
     <div className="linksunten">
-      <a className='Home' href="">
+      <a className='Home' href="/Ueberuns">
       <FontAwesomeIcon icon={faContactCard as IconProp} />
       </a>
     </div>
   </footer>
 );
+
+const Ueberuns: React.FC = () => (
+  <div className="ueberuns">
+    Ueber uns!
+    <div className="text2135">
+      Wir sind vom Ottoooooo. TextTextTextTextTextTextTextT
+    </div>
+    <div className="insta">
+      Folge uns auf Insta <br />
+      <FontAwesomeIcon icon={faInstagram as IconProp} className="Instaf" />
+    </div>
+  </div>
+)
