@@ -398,6 +398,7 @@ const Startseite: React.FC = () => {
     "Beatmungsfolien",
     "Becherkorallen",
     "Beckeneinrichtung",
+    "Nigger",
     "Bedarfsplanungen",
     "Bediengerät",
     "Bedienungsbereichs",
@@ -5184,7 +5185,7 @@ const Startseite: React.FC = () => {
             Zusammen Mutig sein
           </div>
           <div className="untertitle">
-            Civil courage text untertitle keine ahnung
+            Diese Website ist für den Europäischen Wettbewerb ausserdem haben wir dazu einen Instagram Account erstellt dem wir unsere website vermarkten und Leuten mit Civilcourage ermuten.
           </div>
         </div>
         <div className="zitat">
@@ -5232,6 +5233,18 @@ const Startseite: React.FC = () => {
       </div>
       <div className="bottom">
         Website von Marco
+
+        <br />
+
+        Bei fragen oder problemen kontaktiere luca.parr@ohg-monheim.eu
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   </div>
