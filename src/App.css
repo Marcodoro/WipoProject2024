@@ -189,14 +189,15 @@ header {
   .link4 {
     display: none !important;
   }
-  .link5 {
-    display: none !important;
-  }
+
   .linkse {
     display: none !important;
   }
   .title2 {
-    width: 100vw !important;
+    width: 70vw !important;
+  }
+  .link5 {
+    width: 30vw !important;
   }
   .link2 {
     width: 100vw !important;
@@ -218,6 +219,7 @@ header {
     font-size: 20px !important;
     height: 24% !important;
     width: 90% !important;
+    transform: translatey(40px);
   }
 }
 footer {
@@ -255,6 +257,7 @@ input {
   border: rgb(32, 25, 99) solid 3px;
   font-size: 20px;
   padding-left: 30px;
+  background-color: var(--background-color);
   transition: 0.2s ease-in-out;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -449,6 +452,9 @@ main {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   
 }
+.linksunten:focus {
+  background-color: var(--primary-color);
+}
 .linksunten:first-child {
   background-color: var(--primary-color);
 }
@@ -462,9 +468,9 @@ main {
   margin-top: 0px;
 }
 .untertitle {
-  font-size: 15px;
+  font-size: 12px;
   font-family: poppins !important;
-  transform: translateY(50px);
+  transform: translateY(80px);
   color: var(--secondary-color);
 }
 .line {
@@ -671,17 +677,21 @@ main {
   font-size: 25px;
 }
 .text2135 {
-  width: 90vw !important;
+  width: 80vw !important;
   display: flex;
   justify-content: center;
   font-size: 12px;
   align-items: center;
   flex-direction: column;
   height: 100px !important;
-  
+  padding: 30px;
 }
 .insta {
   font-size: 20px;
 
   text-align: center;
+}
+.bottom {
+  font-family: poppins;
+  font-weight: 700;
 }

@@ -50,7 +50,7 @@ const Startseite: React.FC = () => {
   const navigate = useNavigate();
 
   const filter = new Filter();
-  filter.addWords('hitler', "Abbaumaschinen",
+  filter.addWords('hitler', "Abbaumaschinen",  "Jan Philip", "jp",
     "Abbauorte",
     "Abbausituationen",
     "Abendwache",
@@ -5232,7 +5232,7 @@ const Startseite: React.FC = () => {
         <div className="right"></div>
       </div>
       <div className="bottom">
-        Website von Marco
+        Website von Marco, Luca, Till und Henry
 
         <br />
 
@@ -5271,7 +5271,7 @@ const CommentPage: React.FC = () => {
   const [newReply, setNewReply] = useState('');
 
   const filter = new Filter();
-  filter.addWords('hitler', "Abbaumaschinen",
+  filter.addWords('hitler', "Abbaumaschinen",  "Jan Philip", "jp",
 "Abbauorte",
 "Abbausituationen",
 "Abendwache",
@@ -10304,7 +10304,7 @@ const CommentPage: React.FC = () => {
   const addReply = async () => {
     if (newReply.trim() && commentId) {
       if (filter.isProfane(newReply)) {
-        alert('Your reply contains inappropriate language.');
+        alert('Schlimme wörter bitte nicht');
         return;
       }
 
@@ -10454,11 +10454,12 @@ const Ueberuns: React.FC = () => (
   <div className="ueberuns">
     Ueber uns!
     <div className="text2135">
-      Wir sind vom Ottoooooo. TextTextTextTextTextTextTextT
+     Wir sind Schuüler vom Otto-Hahn-Gymnasium, in der 9 Klasse. Dies ist ein Project von dem Wipo Diff. Kurs geleitet voon Herr Götzinger. Gemeinsam haben wir diese Website und den Insta Acc errichted, denn GEMEINSAM SIND WIR STARK!!
     </div>
     <div className="insta">
       Folge uns auf Insta <br />
-      <FontAwesomeIcon icon={faInstagram as IconProp} className="Instaf" />
+      <a href="https://www.instagram.com/zusammen_mutig_2024?">
+      <FontAwesomeIcon icon={faInstagram as IconProp} className="Instaf" /></a>
     </div>
   </div>
 )
